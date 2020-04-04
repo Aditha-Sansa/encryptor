@@ -8,9 +8,9 @@ void encryptdecryptFunc(void)
     char sentenceCopy[151];
     int encrypted[151];
     char encrypted_chars[151];
-    char exitprg[1];
     int count = 0;
     int del = 0;
+    int distance = 0;
     int key = 5;
     int error = 0;
 
@@ -29,12 +29,20 @@ void encryptdecryptFunc(void)
 	}
 	printf("character count: %d \n", count);
 	
-	//encrypt
+	//encrypt - Rot-N/Rot cipher (shift down the ascii value)
 	for (int i = 0; i < count; i++) 
 	{
-
-        if (sentenceCopy[i] >= 32 && sentenceCopy[i] < 127)
+        if (sentenceCopy[i] < 37 && sentenceCopy[i] >= 32)
         {
+            // if the ascii is lowered past 32 by the key then we go to 127 and shift the value
+            // if x<37 then;
+            // x-32 = y
+            // 122+y = encrypted[i]
+            distance = sentenceCopy[i] - 32;
+            encrypted[i] = distance + 122;
+        }
+        else if (sentenceCopy[i] >= 37 && sentenceCopy[i] < 127)
+        {   
             encrypted[i] = sentenceCopy[i] - key;
         }
         else
